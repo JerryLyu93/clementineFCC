@@ -50,10 +50,10 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 
-	app.route('/auth/fuckbook')
+	app.route('/auth/facebook')
 		.get(passport.authenticate('facebook'));
 
-	app.route('/auth/fuckbook/callback')
+	app.route('/facebook')
 		.get(passport.authenticate('facebook', {
 			successRedirect: '/',
 			failureRedirect: '/login'
