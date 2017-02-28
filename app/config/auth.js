@@ -8,7 +8,7 @@ module.exports = {
 	},
 	'facebookAuth': {
 		'clientID': process.env.FACEBOOK_KEY,
-		'clicentSecret': process.env.FACEBOOK_SECRET,
+		'clientSecret': process.env.FACEBOOK_SECRET,
 		'callbackURL': process.env.APP_URL + 'facebook'
 	}
 };
