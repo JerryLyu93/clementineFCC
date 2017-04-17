@@ -21,8 +21,9 @@ module.exports = function (passport) {
 		callbackURL: configAuth.facebookAuth.callbackURL
 	},
 	function (token, refreshToken, profile, done) {
+		console.log(profile)
 		process.nextTick(function () {
-			User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+			User.findOne({ 'user.id': profile.id }, function (err, user) {
 				if (err) {
 					return done(err)
 				}
@@ -31,11 +32,11 @@ module.exports = function (passport) {
 					return done(null, user)
 				} else {
 					var newUser = new User()
-
-					newUser.facebook.id = profile.id;
-					newUser.facebook.username = profile.username;
-					newUser.facebook.displayName = profile.displayName;
-					newUser.facebook.publicRepos = profile._json.public_repos;
+					newUser.user.passport = 'facebook'
+					newUser.user.id = profile.id;
+					newUser.user.username = profile.username;
+					newUser.user.displayName = profile.displayName;
+					newUser.user.publicRepos = profile._json.public_repos;
 					newUser.nbrClicks.clicks = 0;
 
 					newUser.save(function (err) {
@@ -57,7 +58,7 @@ module.exports = function (passport) {
 	},
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
-			User.findOne({ 'github.id': profile.id }, function (err, user) {
+			User.findOne({ 'user.id': profile.id }, function (err, user) {
 				if (err) {
 					return done(err);
 				}
@@ -67,10 +68,11 @@ module.exports = function (passport) {
 				} else {
 					var newUser = new User();
 
-					newUser.github.id = profile.id;
-					newUser.github.username = profile.username;
-					newUser.github.displayName = profile.displayName;
-					newUser.github.publicRepos = profile._json.public_repos;
+					newUser.user.passport = 'github'
+					newUser.user.id = profile.id;
+					newUser.user.username = profile.username;
+					newUser.user.displayName = profile.displayName;
+					newUser.user.publicRepos = profile._json.public_repos;
 					newUser.nbrClicks.clicks = 0;
 
 					newUser.save(function (err) {
